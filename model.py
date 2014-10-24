@@ -46,7 +46,7 @@ def connect():
 
     return Session()
 
-    
+
 def main():
     """In case we need this for something"""
     pass
