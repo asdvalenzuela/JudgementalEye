@@ -1,5 +1,5 @@
 import model
-import csv
+# import csv
 import datetime
 
 def load_users(session):
@@ -65,10 +65,15 @@ def load_ratings(session):
     ratings_table = open("seed_data/u.data", "r")
     for line in ratings_table:
         aline = line.split()
-        user_id, item_id, rating, timestamp = aline
+        user_id, item_id, movie_rating, timestamp = aline
+
         rating = model.Rating()
-        
-        session.add(user)
+        rating.user_id = user_id
+        rating.movie_id = item_id
+        rating.rating = movie_rating
+
+        session.add(rating)
+
     session.commit()
 
 def main(session):
@@ -81,4 +86,5 @@ if __name__ == "__main__":
 
     session = model.connect()
     # load_users(session)
-    load_movies(session)
+    # load_movies(session)
+    # load_ratings(session)
