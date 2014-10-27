@@ -36,6 +36,7 @@ def load_movies(session):
         #removes date from movie title column
         movie_title = old_movie_title.split("(")
         new_movie_title = movie_title[0]
+        new_movie_title = new_movie_title.strip()
         #converts to unicode
         new_movie_title = new_movie_title.decode("latin-1")
 
@@ -86,5 +87,12 @@ if __name__ == "__main__":
 
     session = model.connect()
     # load_users(session)
-    # load_movies(session)
+ 
+
+
+
+
+
+
+ 
     # load_ratings(session)

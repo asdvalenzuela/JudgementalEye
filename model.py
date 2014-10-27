@@ -2,6 +2,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship, backref
 
 ENGINE = None
 Session = None
@@ -19,6 +21,9 @@ class User(Base):
     age = Column(Integer, nullable = True)
     zipcode = Column(String(15), nullable = True)
 
+    # ratings backref added by Rating class
+    ratings = relationship("Rating")
+
 #defines movie class
 class Movie(Base):
     __tablename__ = "movies"
@@ -28,13 +33,22 @@ class Movie(Base):
     released_at = Column(DateTime(timezone=False), nullable = True)
     imdb_url = Column(String(300), nullable=True)
 
+    # ratings backref added by Rating class
+
 class Rating(Base):
     __tablename__ = "ratings"
 
     id = Column(Integer, primary_key = True)
-    movie_id = Column(Integer, nullable = False)
-    user_id = Column(Integer, nullable = False)
+    movie_id = Column(Integer, ForeignKey('movies.id'), nullable = False)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable = False)
     rating = Column(Integer, nullable = True)
+    #connects to User class, can order by name, timestamp, etc.
+    user = relationship("User")
+    
+    #connects to Movie class
+    movie = relationship("Movie", 
+        backref=backref("ratings", order_by=id))
+
 ### End class declarations
 
 def connect():
