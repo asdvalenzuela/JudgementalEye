@@ -1,15 +1,21 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, backref
 
-ENGINE = None
-Session = None
+ENGINE = create_engine("sqlite:///ratings.db", echo=True)
+session = scoped_session(sessionmaker(bind=ENGINE,
+                                        autocommit = False,
+                                        autoflush = False))
+
+# ENGINE = None
+# Session = None
 
 
 Base = declarative_base()
+Base.query = session.query_property()
 
 ### Class declarations go here
 class User(Base):
@@ -21,7 +27,7 @@ class User(Base):
     age = Column(Integer, nullable = True)
     zipcode = Column(String(15), nullable = True)
 
-    # ratings backref added by Rating class
+    # creates backref relationship to Rating class
     ratings = relationship("Rating")
 
 #defines movie class
@@ -30,7 +36,7 @@ class Movie(Base):
 
     id = Column(Integer, primary_key = True)
     name = Column(String(120), nullable = False)
-    released_at = Column(DateTime(timezone=False), nullable = True)
+    released_at = Column(Date(timezone=False), nullable = True)
     imdb_url = Column(String(300), nullable=True)
 
     # ratings backref added by Rating class
@@ -43,22 +49,23 @@ class Rating(Base):
     user_id = Column(Integer, ForeignKey('users.id'), nullable = False)
     rating = Column(Integer, nullable = True)
     #connects to User class, can order by name, timestamp, etc.
+    #with this one we added the relationship in the User class, this can be done either way
     user = relationship("User")
-    
+
     #connects to Movie class
     movie = relationship("Movie", 
         backref=backref("ratings", order_by=id))
 
 ### End class declarations
 
-def connect():
-    global ENGINE
-    global Session
+# def connect():
+#     global ENGINE
+#     global Session
 
-    ENGINE = create_engine("sqlite:///ratings.db", echo=True)
-    Session = sessionmaker(bind=ENGINE)
+#     ENGINE = create_engine("sqlite:///ratings.db", echo=True)
+#     Session = sessionmaker(bind=ENGINE)
 
-    return Session()
+#     return Session()
 
 
 def main():
