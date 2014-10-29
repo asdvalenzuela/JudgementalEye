@@ -1,0 +1,13 @@
+<html>
+    <h2>Movie List</h2>
+    <h4>Click on a movie to rate it!</h4>
+    <table BORDER="1"    WIDTH="100%"   CELLPADDING="5">
+    {% for movie in movie_list %}
+        <tr>
+            <td><strong>Title:</strong> <a href="/addrating/{{movie.id}}">{{ movie.name }}</a></td>
+            <td><strong>Release Date:</strong> {{ movie.released_at }}</td>
+            <td><a href="{{movie.imdb_url}}">More information</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+</html>

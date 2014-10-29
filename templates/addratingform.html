@@ -1,0 +1,18 @@
+<html>
+<form action="/addratingprocess" method='POST'>
+<div>
+    <label for="movietitle">Movie Title</label>
+    <input type="text" value='{{title}}' id="movietitle" name="movietitle" />
+</div>
+<div>
+    <input type="hidden" value="{{movieid}}" id="movieid" name="movieid" />
+</div>
+<div>
+    <label for="rating">Rating</label>
+    <input type="rating" id="rating" name="rating" />
+</div>
+<div class="button">
+    <button type="submit">Submit</button>
+</div>
+</form>
+</html>

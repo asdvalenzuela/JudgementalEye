@@ -1,0 +1,30 @@
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+</head>
+<body>
+    <form action="/ratingprocess" method='POST'>
+        <div class="input-group">
+            <label for="movietitle">Movie Title</label>
+            <input type="text" class="form-control" value='{{title}}' id="movietitle" name="movietitle" />
+        </div>
+        <div>
+            <input type="hidden" value="{{movieid}}" id="movieid" name="movieid" />
+        </div>
+        <div>
+            <label for="rating">Rating</label>
+            <input type="rating" id="rating" name="rating" />
+        </div>
+        <div class="button">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</body>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</html>

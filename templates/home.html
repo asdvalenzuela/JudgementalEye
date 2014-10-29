@@ -1,0 +1,13 @@
+<html>
+<head>
+</head>
+<body>
+    <h1>Welcome!</h1>
+    <h2>Your Movie Ratings</h2>
+    <a href="/movies"><button>Want to rate a new movie? Click here</button></a>
+    <h4>Click your rating to update it.</h4>
+    {% for rating in rating_list %}
+        {{rating.movie.name}} : <a href="/updaterating/{{rating.movie_id}}">{{rating.rating}}</a> <br><br>
+    {% endfor %}
+</body>
+</html>
