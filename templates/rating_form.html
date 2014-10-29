@@ -5,18 +5,25 @@
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-
+    <style> 
+        body {
+            margin: 50px ;
+        }
+    </style>
 </head>
 <body>
-    <form action="/ratingprocess" method='POST'>
-        <div class="input-group">
+    <div class="page-header">
+        <h1><span class="label label-primary">Update your Rating</span></h1>
+    </div>
+    <form role="form-inline" action="/ratingprocess" method='POST'>
+        <div class="form-group">
             <label for="movietitle">Movie Title</label>
-            <input type="text" class="form-control" value='{{title}}' id="movietitle" name="movietitle" />
+            <input type="text" value='{{title}}' id="movietitle" name="movietitle" />
         </div>
         <div>
             <input type="hidden" value="{{movieid}}" id="movieid" name="movieid" />
         </div>
-        <div>
+        <div class="form-group">
             <label for="rating">Rating</label>
             <input type="rating" id="rating" name="rating" />
         </div>
