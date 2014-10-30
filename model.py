@@ -31,6 +31,8 @@ class User(Base):
     # creates backref relationship to Rating class
     ratings = relationship("Rating")
 
+    # other_users = 
+
     def similarity(self, user2):
         user_ratings = {}
         rating_pairs = []
@@ -51,12 +53,21 @@ class User(Base):
         for u in other_users:
             pearson_coeff = self.similarity(u)
             rankings.append((pearson_coeff, u.id))
-        return sorted(rankings[0])
+        return sorted(rankings)[-1]
 
-    def make_prediction(self, other_users, movie):
-        top_user = ranked_users(other_users)
-        for rating in top_user.ratings:
-
+    def make_prediction(self, movie_id):
+        movie_ratings = session.query(Rating).filter_by(movie_id = movie_id).all()
+        other_users = []
+        # other_users = [other_users.append(rating.user) for rating in movie_ratings]
+        for rating in movie_ratings:
+            other_users.append(rating.user) 
+        top_user = self.ranked_users(other_users)
+        top_user_rating = session.query(Rating).filter_by(user_id = top_user[1]).filter_by(movie_id = movie_id).first()
+        rating = top_user_rating.rating
+        print rating, top_user[0]
+        prediction = rating * top_user[0]
+        print prediction
+        # return prediction
 
 
 

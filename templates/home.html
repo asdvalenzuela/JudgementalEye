@@ -1,11 +1,24 @@
 <html>
 <head>
+    </style>
+        <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <style> 
+        body {
+            margin: 50px ;
+        }
+    </style>
 </head>
-<body>
-    <h1>Welcome!</h1>
-    <h2>Your Movie Ratings</h2>
+    <div class="page-header">
+        <h1><span class="label label-primary">Your Movie Ratings</span></h1>
+    </div>
     <a href="/movies"><button>Want to rate a new movie? Click here</button></a>
+    <br><br>
     <h4>Click your rating to update it.</h4>
+    <br><br>
     {% for rating in rating_list %}
         {{rating.movie.name}} : <a href="/updaterating/{{rating.movie_id}}">{{rating.rating}}</a> <br><br>
     {% endfor %}

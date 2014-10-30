@@ -1,10 +1,21 @@
 <html>
+<html>
 <head>
-    <style>
+    </style>
+        <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <style> 
+        body {
+            margin: 50px ;
+        }
     </style>
 </head>
-    <h2>User List</h2>
+    <div class="page-header">
+        <h1><span class="label label-primary">User List</span></h1>
+    </div>
     {% for user in user_list %}
     <p>User {{ user.id }}, age {{ user.age }}, has {{ user.ratings|length }} ratings.</p>
     {% endfor %}
