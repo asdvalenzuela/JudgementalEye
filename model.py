@@ -48,26 +48,67 @@ class User(Base):
         else:
             return 0.0
 
-    def ranked_users(self, other_users):
-        rankings = []
+
+    def similarity_pairs(self, other_users, movie_id):
+        similarity_pairs = []
         for u in other_users:
             pearson_coeff = self.similarity(u)
-            rankings.append((pearson_coeff, u.id))
-        return sorted(rankings)[-1]
+            for rating in u.ratings:
+                if rating.movie_id == movie_id:
+                    movie_rating = rating.rating
+            if pearson_coeff > 0:        
+                similarity_pairs.append((pearson_coeff, movie_rating))
+        print "SIM PAIRS", similarity_pairs
+        return similarity_pairs
 
+    # def filter(movie_id):
     def make_prediction(self, movie_id):
         movie_ratings = session.query(Rating).filter_by(movie_id = movie_id).all()
         other_users = []
         # other_users = [other_users.append(rating.user) for rating in movie_ratings]
         for rating in movie_ratings:
-            other_users.append(rating.user) 
-        top_user = self.ranked_users(other_users)
-        top_user_rating = session.query(Rating).filter_by(user_id = top_user[1]).filter_by(movie_id = movie_id).first()
-        rating = top_user_rating.rating
-        print rating, top_user[0]
-        prediction = rating * top_user[0]
-        print prediction
+            if rating.user_id != self.id:
+                other_users.append(rating.user) 
+
+    # def make_prediction(other_users)
+        similarity_pairs = self.similarity_pairs(other_users, movie_id)
+        coeff_sum = 0
+        coeffs = 0
+        for item in similarity_pairs:
+            coeff_sum = coeff_sum + (item[0] * item[1])
+            coeffs += item[0]
+        weighted_mean = coeff_sum/coeffs
+        return weighted_mean
         # return prediction
+
+    # def similarity(self, other):
+    #     u_ratings = {}
+    #     paired_ratings = []
+    #     for r in self.ratings:
+    #         u_ratings[r.movie_id] = r
+
+    #     for r in other.ratings:
+    #         u_r = u_ratings.get(r.movie_id)
+    #         if u_r:
+    #             paired_ratings.append( (u_r.rating, r.rating) )
+
+    #     if paired_ratings:
+    #         return correlation.pearson(paired_ratings)
+    #     else:
+    #         return 0.0
+
+    # def predict_rating(self, movie):
+    #     ratings = self.ratings
+    #     other_ratings = movie.ratings
+    #     similarities = [ (self.similarity(r.user), r) \
+    #         for r in other_ratings ]
+    #     similarities.sort(reverse = True)
+    #     similarities = [ sim for sim in similarities if sim[0] > 0 ]
+    #     if not similarities:
+    #         return None
+    #     numerator = sum([ r.rating * similarity for similarity, r in similarities ])
+    #     denominator = sum([ similarity[0] for similarity in similarities ])
+    #     return numerator/denominator
 
 
 
