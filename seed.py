@@ -79,13 +79,13 @@ def load_ratings(session):
 
 def main(session):
     # You'll call each of the load_* functions with the session as an argument
-    pass
+    load_movies(session)
 
 if __name__ == "__main__":
     s= model.connect()
     main(s)
 
-    session = model.connect()
+    # session = model.connect()
     # load_users(session)
  
 
@@ -94,5 +94,5 @@ if __name__ == "__main__":
 
 
 
- 
+
     # load_ratings(session)

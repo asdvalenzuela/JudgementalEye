@@ -18,13 +18,14 @@ def displaysignup():
 
 @app.route("/users")
 def index():
-    user_list = model.session.query(model.User).limit(5).all()
+    user_list = model.session.query(model.User).limit(25).all()
     return render_template("user_list.html", user_list = user_list)
 
-@app.route("/home")
-def home():
-    rating_list = model.session.query(model.Rating).filter_by(user_id = session['user_id']).all()
-    print rating_list[0].rating
+@app.route("/home/<int:id>")
+def home(id):
+    rating_list = model.session.query(model.Rating).filter_by(user_id = id).all()
+    # for rating in rating_list:
+    #     print rating.movie.name
     return render_template("home.html", rating_list = rating_list)
 
 @app.route("/signup", methods=["POST"])
@@ -68,7 +69,7 @@ def loginprocess():
             print session['user_id']
             #add to html to incorporate flash
             flash("Welcome,", email)
-            return redirect("/home")
+            return redirect("/home/1")
 
 
 @app.route("/movies")
@@ -98,7 +99,9 @@ def ratingprocess():
 def displayaddratingform(id):
     movie = model.session.query(model.Movie).filter_by(id = id).first()
     title = movie.name
-    return render_template("addratingform.html", title = title, movieid = id)
+    user = model.session.query(model.User).filter_by(id = session['user_id']).first()
+    prediction = model.User.make_prediction(user, movie.id)
+    return render_template("addratingform.html", title = title, movieid = id, prediction = prediction)
 
 @app.route("/addratingprocess", methods=["POST"])   
 def add_rating():

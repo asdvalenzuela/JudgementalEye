@@ -16,7 +16,8 @@
     <div class="page-header">
         <h1><span class="label label-primary">Add your Rating</span></h1>
     </div>
-    <form role="form" class="form-inline" action="/addratingprocess" method='POST'>
+        <h4>We predict that your rating will be {{ '%.02f' % prediction }}.</h4>
+    <form role="form" class="form-inline" action="/addratingprocess" method='POST'>    
         <div class="form-group">
             <label for="movietitle">Movie Title</label>
             <input type="text" value='{{title}}' id="movietitle" name="movietitle" />

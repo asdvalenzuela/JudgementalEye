@@ -17,6 +17,10 @@
         <h1><span class="label label-primary">User List</span></h1>
     </div>
     {% for user in user_list %}
-    <p>User {{ user.id }}, age {{ user.age }}, has {{ user.ratings|length }} ratings.</p>
+        {% if user.ratings %}
+            <p>User <a href="/home/{{user.id}}">{{ user.id }}</a>, age {{ user.age }}, has {{ user.ratings|length }} ratings.</p>
+        {% else %}
+            <p>User {{ user.id }}, age {{ user.age }}, has {{ user.ratings|length }} ratings.</p> 
+        {% endif %}
     {% endfor %}
 </html>

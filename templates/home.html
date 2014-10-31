@@ -17,8 +17,11 @@
     </div>
     <a href="/movies"><button>Want to rate a new movie? Click here</button></a>
     <br><br>
+    <a href="/users"><button>Want to see other user ratings? Click Here</button></a>
+        <br><br>
+            <br><br>
     <h4>Click your rating to update it.</h4>
-    <br><br>
+    <br>
     {% for rating in rating_list %}
         {{rating.movie.name}} : <a href="/updaterating/{{rating.movie_id}}">{{rating.rating}}</a> <br><br>
     {% endfor %}

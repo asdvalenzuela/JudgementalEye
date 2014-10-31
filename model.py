@@ -29,7 +29,7 @@ class User(Base):
     zipcode = Column(String(15), nullable = True)
 
     # creates backref relationship to Rating class
-    ratings = relationship("Rating")
+    # ratings = relationship("Rating")
 
     # other_users = 
 
@@ -132,7 +132,8 @@ class Rating(Base):
     rating = Column(Integer, nullable = True)
     #connects to User class, can order by name, timestamp, etc.
     #with this one we added the relationship in the User class, this can be done either way
-    user = relationship("User")
+    user = relationship("User",
+        backref=backref("ratings", order_by=id))
 
     #connects to Movie class
     movie = relationship("Movie", 
